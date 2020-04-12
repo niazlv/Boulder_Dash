@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Bolder Dash</string>
+    <integer name="mapsize">16</integer>
+</resources>
