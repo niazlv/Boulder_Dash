@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:screenOrientation="portrait"
     tools:context=".MainActivity">
 
     <FrameLayout
@@ -17,8 +18,8 @@
 
         <com.example.bolderdash.Draw2D
             android:id="@+id/draw2D"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -26,16 +27,12 @@
 
             <io.github.controlwear.virtual.joystick.android.JoystickView
                 android:id="@+id/joystickView"
-                android:layout_width="0dp"
-                android:layout_height="182dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="508dp"
-                android:layout_marginEnd="92dp"
+                android:layout_width="677dp"
+                android:layout_height="698dp"
                 app:JV_borderColor="@color/colorPrimary"
                 app:JV_buttonColor="@color/colorAccent"
-                app:layout_constraintEnd_toStartOf="@+id/Skip"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="@+id/Start"
+                app:layout_constraintTop_toBottomOf="@+id/Start" />
 
             <Button
                 android:id="@+id/Start"
@@ -54,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:onClick="onClickEDITOR"
                 android:text="EDITOR"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Start" />
@@ -69,6 +67,7 @@
                 android:hint=" 0-75"
                 android:inputType="numberSigned"
                 android:textSize="10sp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toTopOf="@+id/Start"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -84,6 +83,7 @@
                 android:hint=" 1-2"
                 android:inputType="numberSigned"
                 android:textSize="10sp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toTopOf="@+id/textView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -96,6 +96,7 @@
                 android:layout_marginStart="58dp"
                 android:layout_marginEnd="232dp"
                 android:text="Set number of level"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toTopOf="@+id/editTextmapnum"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -109,6 +110,7 @@
                 android:layout_marginTop="36dp"
                 android:layout_marginEnd="249dp"
                 android:text="Set map number"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toTopOf="@+id/editTextnum"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -132,12 +134,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="7dp"
-                android:layout_marginBottom="8dp"
                 android:onClick="Skip"
                 android:text="Skip level"
                 app:layout_constraintBottom_toTopOf="@+id/reset"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/joystickView" />
+                app:layout_constraintStart_toStartOf="@+id/reset" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -2,8 +2,10 @@ package com.example.bolderdash;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,7 +17,9 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
+import android.view.Surface;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -76,6 +80,7 @@ public class MainActivity extends AppCompatActivity{
 
     public int mapbac[][]=new int[mapsize+2][mapsize+2];
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +89,10 @@ public class MainActivity extends AppCompatActivity{
 
         draw2D=findViewById(R.id.draw2D);
         //setContentView(draw2D);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+
 
 
         editTextnum=findViewById(R.id.editTextnum);
@@ -123,15 +132,10 @@ public class MainActivity extends AppCompatActivity{
                 break;
             case Configuration.UI_MODE_NIGHT_YES:
                 // ночная тема активна, и она используется
-                //findViewById(R.id.frameLayout).setBackgroundColor(Color.rgb(33, 33, 34));
+                findViewById(R.id.frameLayout).setBackgroundColor(Color.rgb(33, 33, 34));
                 break;
         }
 
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        width = size.x;
-        height = size.y;
 
 
 
@@ -147,19 +151,29 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-
-        draw2D.setVisibility(View.INVISIBLE);
+        start_map();
+        //draw2D.setVisibility(View.INVISIBLE);
         joystick.setVisibility(View.INVISIBLE);
         findViewById(R.id.reset).setVisibility(View.INVISIBLE);
         findViewById(R.id.Skip).setVisibility(View.INVISIBLE);
 
         }
         public void onClickStart(View view){
-
             draw2D.setVisibility(View.VISIBLE);
             joystick.setVisibility(View.VISIBLE);
             findViewById(R.id.reset).setVisibility(View.VISIBLE);
             findViewById(R.id.Skip).setVisibility(View.VISIBLE);
+
+
+            Display display = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            width = size.x;
+            height = size.y;
+
+
+
+
             try {
                 //num = Integer.valueOf(String.valueOf(editTextnum.getText()));
                 if(num<1||num>2){
@@ -177,6 +191,7 @@ public class MainActivity extends AppCompatActivity{
 
             start_map();
             setValues();
+
 
 
             findViewById(R.id.Start).setVisibility(View.INVISIBLE);
@@ -218,6 +233,7 @@ public class MainActivity extends AppCompatActivity{
 
 
 
+
         public void start_map(){
             /** Перерисовка карты*/
             draw2D.Map(mapsize);
@@ -233,6 +249,13 @@ public class MainActivity extends AppCompatActivity{
                 7 - противник batterfly(бабочка)
                 8 - стена
             */
+
+
+
+            ViewGroup.LayoutParams params = joystick.getLayoutParams();
+            params.width = width/2;
+            params.height = height/2;
+            joystick.setLayoutParams(params);
 
 
             if(mapnum>75){
@@ -476,6 +499,14 @@ public class MainActivity extends AppCompatActivity{
 
             }
         return map;
+    }
+    public byte getScreenOrientation(){
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+            return 1;
+        else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            return 0;
+        else
+            return -1;
     }
 }
 

@@ -1,6 +1,7 @@
 package com.example.bolderdash;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,6 +11,7 @@ import android.graphics.Path;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.bolderdash.Persons.All;
 import com.example.bolderdash.Persons.Diamond;
@@ -23,6 +25,8 @@ import com.example.bolderdash.Persons.enemyBatterfly;
 import com.example.bolderdash.Persons.enemyRect;
 
 import java.io.IOException;
+
+import io.github.controlwear.virtual.joystick.android.JoystickView;
 
 import static android.os.SystemClock.sleep;
 
@@ -131,13 +135,6 @@ public class Draw2D extends View {
         }
     }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        canvas = new Canvas(mBitmap);
-    }
-
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -199,8 +196,21 @@ public class Draw2D extends View {
         // стиль Заливка
         mPaint.setStyle(Paint.Style.FILL);
 
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                // ночная тема не активна, используется светлая тема
+                mPaint.setColor(Color.WHITE);
+                break;
+            case Configuration.UI_MODE_NIGHT_YES:
+                // ночная тема активна, и она используется
+                mPaint.setColor(Color.argb(255,28,28,28));
+                break;
+        }
+
         // закрашиваем холст белым цветом
-        mPaint.setColor(Color.WHITE);
+
+
         canvas.drawPaint(mPaint);
 
         // Рисуем желтый круг
@@ -222,6 +232,8 @@ public class Draw2D extends View {
                 if(count>=3) count=0;
                 x=(xx-1)*rect_width;
                 y=(yx-1)*rect_height;
+                if(getScreenOrientation()==0) x=(xx-1)*rect_width+weight/4;
+                if(getScreenOrientation()==1) y=(yx-1)*rect_height+heihgt/4;
                 /*
                 mPaint.setColor(Color.BLUE);
                 canvas.drawText(strx, 100,100,mPaint);
@@ -309,4 +321,13 @@ public class Draw2D extends View {
             }
         }
         //canvas.drawRect(x,y,x+rect_width,y+rect_height,mPaint);
+
+    public byte getScreenOrientation(){
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+            return 1;
+        else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            return 0;
+        else
+            return -1;
+    }
 }
