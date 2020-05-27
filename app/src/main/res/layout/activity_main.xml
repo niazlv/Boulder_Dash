@@ -140,6 +140,61 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/reset" />
 
+            <Button
+                android:id="@+id/upb"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintBottom_toTopOf="@+id/contboy"
+                app:layout_constraintEnd_toEndOf="@+id/contboy"
+                app:layout_constraintStart_toStartOf="@+id/contboy" />
+
+            <Button
+                android:id="@+id/downb"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="@+id/contboy"
+                app:layout_constraintStart_toStartOf="@+id/contboy"
+                app:layout_constraintTop_toBottomOf="@+id/contboy" />
+
+            <Button
+                android:id="@+id/rightb"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="12dp"
+                app:layout_constraintBottom_toBottomOf="@+id/contboy"
+                app:layout_constraintStart_toEndOf="@+id/contboy"
+                app:layout_constraintTop_toTopOf="@+id/contboy" />
+
+            <Button
+                android:id="@+id/leftb"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintBottom_toBottomOf="@+id/contboy"
+                app:layout_constraintEnd_toStartOf="@+id/contboy"
+                app:layout_constraintTop_toTopOf="@+id/contboy" />
+
+            <TextView
+                android:id="@+id/contboy"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginTop="116dp"
+                android:layout_marginEnd="204dp"
+                app:layout_constraintEnd_toStartOf="@+id/Start"
+                app:layout_constraintTop_toTopOf="@+id/Start" />
+
+            <Switch
+                android:id="@+id/joystickswitch"
+                android:layout_width="119dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="172dp"
+                android:layout_marginBottom="144dp"
+                android:text="Use buttons"
+                app:layout_constraintBottom_toBottomOf="@+id/Start"
+                app:layout_constraintEnd_toStartOf="@+id/Start" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>

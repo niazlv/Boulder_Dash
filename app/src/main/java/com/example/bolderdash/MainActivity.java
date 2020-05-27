@@ -3,55 +3,28 @@ package com.example.bolderdash;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Looper;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
-import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.bolderdash.Persons.All;
-import com.example.bolderdash.Persons.Diamond;
-import com.example.bolderdash.Persons.Dir;
-import com.example.bolderdash.Persons.Player;
-import com.example.bolderdash.Persons.Stone;
-import com.example.bolderdash.Persons.Void;
-import com.example.bolderdash.Persons.Wall;
-import com.example.bolderdash.Persons.breakableWall;
-import com.example.bolderdash.Persons.enemyBatterfly;
-import com.example.bolderdash.Persons.enemyRect;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import io.github.controlwear.virtual.joystick.android.JoystickView;
-
-import static android.os.SystemClock.sleep;
 
 public class MainActivity extends AppCompatActivity{
     public static Draw2D draw2D;
@@ -61,6 +34,7 @@ public class MainActivity extends AppCompatActivity{
         public static boolean right,left,top,bottom;
         public float rect_heihgt_f_button;
         public float rect_weight_f_button;
+        boolean isCheckedsw=false;
         int dx=1,dy=1;
         float xt,yt,xst,yst;
     public int width,height;
@@ -93,6 +67,53 @@ public class MainActivity extends AppCompatActivity{
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 
+        Button bbottom = (Button) findViewById(R.id.downb);
+        bbottom.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    bottom=true;
+                }
+                if(event.getAction()==MotionEvent.ACTION_UP)
+                {
+                    bottom=false;
+                }
+                return false;
+            }
+        });
+        Button btop = (Button) findViewById(R.id.upb);
+        btop.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    top=true;
+                }
+                if(event.getAction()==MotionEvent.ACTION_UP) top=false;
+                return false;
+            }
+        });
+        Button bleft = (Button) findViewById(R.id.leftb);
+        bleft.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    left=true;
+                }
+                if(event.getAction()==MotionEvent.ACTION_UP) left=false;
+                return false;
+            }
+        });
+        Button bright = (Button) findViewById(R.id.rightb);
+        bright.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    right=true;
+                }
+                if(event.getAction()==MotionEvent.ACTION_UP) right=false;
+                return false;
+            }
+        });
 
 
         editTextnum=findViewById(R.id.editTextnum);
@@ -125,19 +146,23 @@ public class MainActivity extends AppCompatActivity{
         joystick.setBackgroundColor(Color.argb(50, 135,24,146));
 
 
+
+
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         switch (currentNightMode) {
             case Configuration.UI_MODE_NIGHT_NO:
                 // ночная тема не активна, используется светлая тема
+                ((Switch)findViewById(R.id.joystickswitch)).setTextColor(Color.BLACK);
                 break;
             case Configuration.UI_MODE_NIGHT_YES:
                 // ночная тема активна, и она используется
+                ((Switch)findViewById(R.id.joystickswitch)).setTextColor(Color.WHITE);
                 findViewById(R.id.frameLayout).setBackgroundColor(Color.rgb(33, 33, 34));
                 break;
         }
 
 
-        
+
 
 
         DisplayMetrics displaymetrics = getResources().getDisplayMetrics(); //инстализация для получения координат прикосновения
@@ -157,7 +182,18 @@ public class MainActivity extends AppCompatActivity{
         joystick.setVisibility(View.INVISIBLE);
         findViewById(R.id.reset).setVisibility(View.INVISIBLE);
         findViewById(R.id.Skip).setVisibility(View.INVISIBLE);
+        Visibleb(false);
+        Switch sw = (Switch) findViewById(R.id.joystickswitch);
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) //Line A
+            {
+                isCheckedsw=isChecked;
+            }
+        });
 
+        findViewById(R.id.contboy).setY(rect_heihgt_f_button*7);
+        findViewById(R.id.contboy).setX(rect_heihgt_f_button*1);
         }
         public void onClickStart(View view){
             draw2D.setVisibility(View.VISIBLE);
@@ -165,7 +201,10 @@ public class MainActivity extends AppCompatActivity{
             findViewById(R.id.reset).setVisibility(View.VISIBLE);
             findViewById(R.id.Skip).setVisibility(View.VISIBLE);
 
-
+            if(isCheckedsw) {
+                Visibleb(true);
+                joystick.setVisibility(View.INVISIBLE);
+            }
             Display display = getWindowManager().getDefaultDisplay();
             Point size = new Point();
             display.getSize(size);
@@ -201,6 +240,7 @@ public class MainActivity extends AppCompatActivity{
             editTextmapnum.setVisibility(View.INVISIBLE);
             findViewById(R.id.textView).setVisibility(View.INVISIBLE);
             findViewById(R.id.textView2).setVisibility(View.INVISIBLE);
+            findViewById(R.id.joystickswitch).setVisibility(View.INVISIBLE);
 
 
 
@@ -229,6 +269,12 @@ public class MainActivity extends AppCompatActivity{
         start_map();
         Toast.makeText(getApplicationContext(),"Level skiped successful",Toast.LENGTH_SHORT).show();
     }
+
+
+
+
+    /**Управление кнопками*/
+
 
 
 
@@ -367,7 +413,10 @@ public class MainActivity extends AppCompatActivity{
                                 ((All)draw2D.mapo[y][x]).run();
                             }
                         }
-
+//                        right=false;
+//                        left=false;
+//                        bottom=false;
+//                        top=false;
                         int[] mass1={6,7};
                         int[] mass2={4,5};
                         for (y = 0; y < draw2D.mapo.length; y++) {
@@ -508,6 +557,20 @@ public class MainActivity extends AppCompatActivity{
             return 0;
         else
             return -1;
+    }
+    public void Visibleb(boolean visible){
+        if(visible) {
+            findViewById(R.id.leftb).setVisibility(View.VISIBLE);
+            findViewById(R.id.rightb).setVisibility(View.VISIBLE);
+            findViewById(R.id.upb).setVisibility(View.VISIBLE);
+            findViewById(R.id.downb).setVisibility(View.VISIBLE);
+        }
+        if(!visible) {
+            findViewById(R.id.leftb).setVisibility(View.INVISIBLE);
+            findViewById(R.id.rightb).setVisibility(View.INVISIBLE);
+            findViewById(R.id.upb).setVisibility(View.INVISIBLE);
+            findViewById(R.id.downb).setVisibility(View.INVISIBLE);
+        }
     }
 }
 
