@@ -573,8 +573,8 @@ public class MainActivity extends AppCompatActivity{
         }
 
         ViewGroup.LayoutParams params = findViewById(R.id.contboy).getLayoutParams();
-        params.width = (int)(rect_weight_f_button/2);
-        params.height = (int) (rect_weight_f_button/2);
+        params.width = (int)(rect_weight_f_button/1.5);
+        params.height = (int) (rect_weight_f_button/1.5);
         findViewById(R.id.contboy).setLayoutParams(params);
 
         params = findViewById(R.id.leftb).getLayoutParams();
