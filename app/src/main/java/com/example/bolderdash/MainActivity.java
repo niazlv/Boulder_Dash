@@ -571,6 +571,40 @@ public class MainActivity extends AppCompatActivity{
             findViewById(R.id.upb).setVisibility(View.INVISIBLE);
             findViewById(R.id.downb).setVisibility(View.INVISIBLE);
         }
+
+        ViewGroup.LayoutParams params = findViewById(R.id.contboy).getLayoutParams();
+        params.width = (int)(rect_weight_f_button/2);
+        params.height = (int) (rect_weight_f_button/2);
+        findViewById(R.id.contboy).setLayoutParams(params);
+
+        params = findViewById(R.id.leftb).getLayoutParams();
+        params.width = (int)(rect_weight_f_button/1.5);
+        params.height = (int) (rect_weight_f_button/1.5);
+        findViewById(R.id.leftb).setLayoutParams(params);
+
+        params = findViewById(R.id.rightb).getLayoutParams();
+        params.width = (int)(rect_weight_f_button/1.5);
+        params.height = (int) (rect_weight_f_button/1.5);
+        findViewById(R.id.rightb).setLayoutParams(params);
+
+        params = findViewById(R.id.upb).getLayoutParams();
+        params.width = (int)(rect_weight_f_button/1.5);
+        params.height = (int) (rect_weight_f_button/1.5);
+        findViewById(R.id.upb).setLayoutParams(params);
+
+        params = findViewById(R.id.downb).getLayoutParams();
+        params.width = (int)(rect_weight_f_button/1.5);
+        params.height = (int) (rect_weight_f_button/1.5);
+        findViewById(R.id.downb).setLayoutParams(params);
+
+//        findViewById(R.id.rightb).setScaleX(rect_weight_f_button/100);
+//        findViewById(R.id.rightb).setScaleY(rect_heihgt_f_button/100);
+//
+//        findViewById(R.id.upb).setScaleX(rect_weight_f_button/100);
+//        findViewById(R.id.upb).setScaleY(rect_heihgt_f_button/100);
+//
+//        findViewById(R.id.downb).setScaleX(rect_weight_f_button/100);
+//        findViewById(R.id.downb).setScaleY(rect_heihgt_f_button/100);
     }
 }
 
