@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity{
         public static boolean right,left,top,bottom;
         public float rect_heihgt_f_button;
         public float rect_weight_f_button;
-        boolean isCheckedsw=false;
+        boolean isCheckedsw=true;
         int dx=1,dy=1;
         float xt,yt,xst,yst;
     public int width,height;
