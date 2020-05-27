@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity{
         }
 
 
+        
 
 
         DisplayMetrics displaymetrics = getResources().getDisplayMetrics(); //инстализация для получения координат прикосновения
